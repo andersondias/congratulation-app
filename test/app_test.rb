@@ -12,9 +12,28 @@ class AppTest < Test::Unit::TestCase
     Sinatra::Application
   end
 
-  def test_it_returns_200
+  def setup
+    ENV['SLACK_TOKEN'] = '123'
+    ENV['SLACK_OAUTH'] = '321'
+  end
+
+  def teardown
+    ENV['SLACK_TOKEN'] = nil
+  end
+
+  def test_it_returns_200_if_no_token_is_given
     post '/slack/command'
     assert_equal 200, last_response.status
-    assert_equal 'OK', last_response.body
+    assert_equal SlackAuthorizer::UNAUTHORIZED_MESSAGE, last_response.body
+  end
+
+  def test_it_returns_200_if_no_token_does_not_matches
+    post '/slack/command', token: '321',
+                           command: '/congratulation',
+                           text: '@anderson for delivering this api!',
+                           user_name: 'matz'
+
+    assert_equal 200, last_response.status
+    assert_equal SlackAuthorizer::UNAUTHORIZED_MESSAGE, last_response.body
   end
 end
