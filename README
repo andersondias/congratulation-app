@@ -6,6 +6,7 @@ It's composed by a basic Sinatra application that receives a POST message in the
 
 You can find more detailed information about this project at:
 - https://medium.com/little-programming-joys/slack-command-api-with-ruby-part-1-3a299bc1591c
+- https://medium.com/little-programming-joys/introduction-dc968783dae0
 
 Also, read the commit history to understand how it has evolved, step by step.
 
