@@ -28,12 +28,29 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_it_returns_200_if_no_token_does_not_matches
-    post '/slack/command', token: '321',
-                           command: '/congratulation',
-                           text: '@anderson for delivering this api!',
-                           user_name: 'matz'
+    post '/slack/command', token: '321'
 
     assert_equal 200, last_response.status
     assert_equal SlackAuthorizer::UNAUTHORIZED_MESSAGE, last_response.body
+  end
+
+  def test_it_returns_200_if_action_is_help
+    post '/slack/command', token: '123',
+                           command: '/congratulate',
+                           text: 'help',
+                           user_name: 'matz'
+
+    assert_equal 200, last_response.status
+    assert_equal HELP_RESPONSE, last_response.body
+  end
+
+  def test_it_returns_200_if_action_is_empty
+    post '/slack/command', token: '123',
+                           command: '/congratulate',
+                           text: '',
+                           user_name: 'matz'
+
+    assert_equal 200, last_response.status
+    assert_equal HELP_RESPONSE, last_response.body
   end
 end
