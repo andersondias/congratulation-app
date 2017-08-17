@@ -1,6 +1,7 @@
 require 'sinatra'
 
 require_relative 'app/slack_authorizer'
+require_relative 'app/slack_messenger'
 
 use SlackAuthorizer
 
@@ -19,7 +20,10 @@ INVALID_RESPONSE = 'Sorry, I didn’t quite get that. Perhaps try the words in a
 post '/slack/command' do
   case params['text'].to_s.strip
   when 'help', '' then HELP_RESPONSE
-  when VALID_CONGRATULATE_EXPRESSION then OK_RESPONSE % $1
+  when VALID_CONGRATULATE_EXPRESSION
+    from, message = $1, $2
+    SlackMessenger.deliver(params['user_name'], from, message)
+    OK_RESPONSE % from
   else INVALID_RESPONSE
   end
 end
