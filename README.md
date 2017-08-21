@@ -69,4 +69,11 @@ In order to run the sinatra app you must declare the ENV vars before the rackup:
 SLACK_TOKEN='XXX' SLACK_OAUTH='YYY' rackup -p 4567
 ```
 
+## TODO
+
+* Improve specs related to HTTPClient requests;
+* Do not allow users to send congratulations to themselves;
+* Validates if the congratulated username is valid;
+* Send the direct message asynchronously to prevent slow response times.
+
 
