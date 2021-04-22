@@ -3,7 +3,7 @@ GEM
   specs:
     httpclient (2.8.3)
     mustermann (1.0.0)
-    rack (2.0.3)
+    rack (2.2.3)
     rack-protection (2.0.0)
       rack
     sinatra (2.0.0)
